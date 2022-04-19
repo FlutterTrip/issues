@@ -19,11 +19,25 @@ class _TestModel {
     realm.add(TestModel(test1: false, test2: true, primaryKey: 2));
     realm.add(TestModel(test1: true, test2: false, primaryKey: 3));
   });
+
+  final models = realm.all<TestModel>().toList();
+  assert(models[0].primaryKey == 0);
+  assert(models[1].primaryKey == 1);
+
+  final m2 = models[2];
+  assert(m2.primaryKey == 2);
+  assert(m2.test1 == false);
+  assert(m2.test2 == true);
+
+  final m3 = models[3];
+  assert(m3.primaryKey == 3);
+  assert(m3.test1 == true);
+  assert(m3.test2 == false);
 }
 
 cleanRealm(Realm realm) {
   realm.write(() {
-    realm.deleteAll();
+    realm.deleteAll<TestModel>();
   });
 }
 
@@ -37,7 +51,7 @@ Realm initRealm() {
 void main(List<String> arguments) {
   // testModels();
   Realm realm = initRealm();
-  // cleanRealm(realm);
+  cleanRealm(realm);
   testBool(realm);
   exit(0);
 }
