@@ -10,4 +10,9 @@ class _TestModel {
   late int primaryKey = 0;
   bool test1 = true;
   bool test2 = false;
+
+  @override
+  String toString() {
+    return '$primaryKey, $test1, $test2';
+  }
 }
